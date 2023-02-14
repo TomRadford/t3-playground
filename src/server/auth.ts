@@ -5,9 +5,11 @@ import {
 	type DefaultSession,
 } from 'next-auth'
 import DiscordProvider from 'next-auth/providers/discord'
+import EmailProvider from 'next-auth/providers/email'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { env } from '../env/server.mjs'
 import { prisma } from './db'
+import { signIn } from 'next-auth/react/index.js'
 
 /**
  * Module augmentation for `next-auth` types
@@ -50,6 +52,10 @@ export const authOptions: NextAuthOptions = {
 		DiscordProvider({
 			clientId: env.DISCORD_CLIENT_ID,
 			clientSecret: env.DISCORD_CLIENT_SECRET,
+		}),
+		EmailProvider({
+			server: env.EMAIL_SERVER,
+			from: env.EMAIL_FROM,
 		}),
 		/**
 		 * ...add more providers here

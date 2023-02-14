@@ -2,9 +2,9 @@ import { type NextPage } from 'next'
 import Head from 'next/head'
 import { signOut, signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import useHasMounted from '../utils/hooks/mounted'
 import GuestbookEntries from '../components/GuestbookEntries'
 import GuestbookForm from '../components/GuestbookForm'
+
 const Home: NextPage = () => {
 	const { data: session, status } = useSession()
 
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
 												</svg>
 											</button>
 											<Image
-												src={session.user.image ?? '/'}
+												src={session.user.image ?? '/user.png'}
 												alt={session.user.name ?? ''}
 												width={30}
 												height={30}
@@ -60,11 +60,12 @@ const Home: NextPage = () => {
 									</div>
 								) : (
 									<button
+										className=" rounded-md border-2 border-zinc-800 p-2 focus:outline-none"
 										onClick={() => {
-											signIn('discord').catch(console.log)
+											signIn().catch(console.log)
 										}}
 									>
-										Login with Discord
+										Login
 									</button>
 								)}
 							</>
